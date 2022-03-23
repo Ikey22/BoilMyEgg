@@ -1,0 +1,3 @@
+
+rootProject.name = "Boil My Egg"
+include ':app'
