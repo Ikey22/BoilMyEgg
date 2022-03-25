@@ -2,18 +2,22 @@ package app.isolvetech.boilmyegg.ui
 
 import android.app.AlarmManager
 import android.app.Application
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import app.isolvetech.boilmyegg.R
 import app.isolvetech.boilmyegg.receivers.AlarmReceiver
+import app.isolvetech.boilmyegg.util.cancelNotification
+import app.isolvetech.boilmyegg.util.sendNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -107,9 +111,11 @@ class TimerViewModel(private val app: Application): AndroidViewModel(app) {
                 }
                 val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
 
-                // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification
+                val notificationManager = ContextCompat.getSystemService(
+                    app, NotificationManager::class.java
+                ) as NotificationManager
+                notificationManager.cancelNotification()
 
-                // TODO: Step 1.15 call cancel notification
 
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     alarmManager,
